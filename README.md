@@ -3,15 +3,19 @@ Support for power production statistics from the AURUM Meetstekker web-page.
 Place the file aurum/py in the custom_components directory and add the following 
 to the configuration.yaml file (example):
 
+```
 aurum:
    device: 192.168.0.110      # ip adress of the meetstekker
    broker: 192.168.0.111      # ip adress of the MQTT broker you will use
    password: mqtt_password   # MQTT broker password
    username: mqtt_user       # MQTT username
    scan_interval: 20         # reporting interval, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seoconds)
+```
 
 Sensors can be created via:
 
+
+```
 sensor:
   - platform: mqtt
     name: Battery power #power on the AC-side of the inverter-charger
@@ -126,4 +130,4 @@ sensor:
     unit_of_measurement: "m3"
     state_topic: "aurum/counterGas"
     value_template: "{{ value_json | round(1) }}"
-    
+```
