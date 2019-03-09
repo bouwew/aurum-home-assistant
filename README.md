@@ -13,7 +13,7 @@ aurum:
 ```
 
 Sensors can be created via:
-
+(You do not need them all, pick them according to how your system is set up)
 
 ```
 sensor:
@@ -131,3 +131,5 @@ sensor:
     state_topic: "aurum/counterGas"
     value_template: "{{ value_json | round(1) }}"
 ```
+
+
