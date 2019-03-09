@@ -13,7 +13,7 @@ aurum:
 ```
 
 Sensors can be created via:
-(You do not need them all, pick them according to how your system is set up)
+(you probably do not need them all, pick them according to how your system is set up)
 
 ```
 sensor:
