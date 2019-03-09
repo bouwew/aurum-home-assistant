@@ -33,7 +33,7 @@ sensor:
     state_topic: "aurum/counterInBattery"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
-    name: uCHP power 
+    name: uCHP power #energy from any electricity-producing device, other than from solar energy
     unit_of_measurement: "W"
     state_topic: "aurum/powerMCHP"
     value_template: "{{ value_json | round(1) }}"
@@ -78,17 +78,17 @@ sensor:
     state_topic: "aurum/counterInEV"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
-    name: Main power #when there is no Smart Meter with P1-port, a suitable electricity-meter can be metered instead
+    name: Main power #when there is no Smart Meter with P1-port, a suitable electricity-meter can be read out instead
     unit_of_measurement: "W"
     state_topic: "aurum/powerMain"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
-    name: Main consumption
+    name: Main consumption #total E consumption
     unit_of_measurement: "kWh"
     state_topic: "aurum/counterOutMain"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
-    name: Main production
+    name: Main production #total E production
     unit_of_measurement: "kWh"
     state_topic: "aurum/counterInMain"
     value_template: "{{ value_json | round(1) }}"
@@ -126,7 +126,7 @@ sensor:
     state_topic: "aurum/rateGas"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
-    name: Gas totals
+    name: Gas totals #total gas consumption
     unit_of_measurement: "m3"
     state_topic: "aurum/counterGas"
     value_template: "{{ value_json | round(1) }}"
