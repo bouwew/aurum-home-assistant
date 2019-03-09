@@ -29,6 +29,8 @@ from homeassistant.helpers.event import track_time_interval
 
 REQUIREMENTS = ['paho-mqtt==1.4.0']
 
+__version__ = '0.0.1'
+
 _LOGGER = logging.getLogger(__name__)
 
 CONF_BROKER = 'broker'
