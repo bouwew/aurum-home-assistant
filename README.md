@@ -132,4 +132,4 @@ sensor:
     value_template: "{{ value_json | round(1) }}"
 ```
 
-
+Please note: the MQTT messages are transmitted with the retain-function active. This makes these sensors compatible with the home Assistant Utility Meter: https://www.home-assistant.io/components/utility_meter/
