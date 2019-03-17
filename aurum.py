@@ -25,11 +25,11 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.const import (
     CONF_DEVICE, CONF_PASSWORD, CONF_USERNAME, 
     CONF_SCAN_INTERVAL, EVENT_HOMEASSISTANT_STOP)
-from homeassistant.helpers.event import track_time_interval
+from homeassistant.helpers.event import async_track_time_interval
 
 REQUIREMENTS = ['paho-mqtt==1.4.0']
 
-__version__ = '0.0.1'
+__version__ = '0.1.0'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -72,7 +72,7 @@ def setup(hass, config):
         """Stop the Aurum MQTT component."""
         mqttc.disconnect()
 
-    hass.bus.listen_once(EVENT_HOMEASSISTANT_STOP, stop_aurum)
+    hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, stop_aurum)
 
     def get_aurum_data(event_time):
         """Get the latest data from the AURUM API and send to the MQTT Broker.io."""
@@ -90,6 +90,6 @@ def setup(hass, config):
                    value = child.get('value')
                    mqttc.publish('aurum/{}'.format(parameter), value, qos=0, retain=True)
 
-    track_time_interval(hass, get_aurum_data, scan_interval)
+    async_track_time_interval(hass, get_aurum_data, scan_interval)
 
     return True
