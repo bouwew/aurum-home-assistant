@@ -20,115 +20,115 @@ sensor:
   - platform: mqtt
     name: Battery power #power on the AC-side of the inverter-charger
     unit_of_measurement: "W"
-    state_topic: "aurum/powerBattery"
+    state_topic: "homeassistant/sensor/aurum/powerBattery"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: Consumed from Battery #total provided AC power from the batteries
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterOutBattery"
+    state_topic: "homeassistant/sensor/aurum/counterOutBattery"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: Stored in Battery #total stored AC power into the batteries
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterInBattery"
+    state_topic: "homeassistant/sensor/aurum/counterInBattery"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: uCHP power #energy from any electricity-producing device, other than from solar energy
     unit_of_measurement: "W"
-    state_topic: "aurum/powerMCHP"
+    state_topic: "homeassistant/sensor/aurum/powerMCHP"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: uCHP production "total uCHP production
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterOutMCHP"
+    state_topic: "homeassistant/sensor/aurum/counterOutMCHP"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: uCHP consumption #total uCHP consumption
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterInMCHP"
+    state_topic: "homeassistant/sensor/aurum/counterInMCHP"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: PV power
     unit_of_measurement: "W"
-    state_topic: "aurum/powerSolar"
+    state_topic: "homeassistant/sensor/aurum/powerSolar"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: PV consumption
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterOutSolar"
+    state_topic: "homeassistant/sensor/aurum/counterOutSolar"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: PV production
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterInSolar"
+    state_topic: "homeassistant/sensor/aurum/counterInSolar"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: EV power
     unit_of_measurement: "W"
-    state_topic: "aurum/powerEV"
+    state_topic: "homeassistant/sensor/aurum/powerEV"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: EV consumption
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterOutEV"
+    state_topic: "homeassistant/sensor/aurum/counterOutEV"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: EV production
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterInEV"
+    state_topic: "homeassistant/sensor/aurum/counterInEV"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: Main power #when there is no Smart Meter with P1-port, a suitable electricity-meter can be read out instead
     unit_of_measurement: "W"
-    state_topic: "aurum/powerMain"
+    state_topic: "homeassistant/sensor/aurum/powerMain"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: Main consumption #total E consumption
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterOutMain"
+    state_topic: "homeassistant/sensor/aurum/counterOutMain"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: Main production #total E production
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterInMain"
+    state_topic: "homeassistant/sensor/aurum/counterInMain"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: DSMR timestamp # when a Smart Meter with P1-port is present, the below data is coming from the Smart Meter
-    state_topic: "aurum/smartMeterTimestamp"
+    state_topic: "homeassistant/sensor/aurum/smartMeterTimestamp"
   - platform: mqtt
     name: E net consumption
     unit_of_measurement: "W"
-    state_topic: "aurum/powerElectricity"
+    state_topic: "homeassistant/sensor/aurum/powerElectricity"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: E dal in totals
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterElectricityInLow"
+    state_topic: "homeassistant/sensor/aurum/counterElectricityInLow"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: E dal uit totals
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterElectricityOutLow"
+    state_topic: "homeassistant/sensor/aurum/counterElectricityOutLow"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: E piek in totals
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterElectricityInHigh"
+    state_topic: "homeassistant/sensor/aurum/counterElectricityInHigh"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: E piek uit totals
     unit_of_measurement: "kWh"
-    state_topic: "aurum/counterElectricityOutHigh"
+    state_topic: "homeassistant/sensor/aurum/counterElectricityOutHigh"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: Gas rate #works only with an analog gas meter
     unit_of_measurement: "m3/hr"
-    state_topic: "aurum/rateGas"
+    state_topic: "homeassistant/sensor/aurum/rateGas"
     value_template: "{{ value_json | round(1) }}"
   - platform: mqtt
     name: Gas totals #total gas consumption
     unit_of_measurement: "m3"
-    state_topic: "aurum/counterGas"
+    state_topic: "homeassistant/sensor/aurum/counterGas"
     value_template: "{{ value_json | round(1) }}"
 ```
 
