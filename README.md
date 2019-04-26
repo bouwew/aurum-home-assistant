@@ -1,6 +1,6 @@
 __Support for power production and consumption values and counters from the AURUM Meetstekker web-page.__
 
-Place the file ```__init__.py``` in the custom_components/aurum directory and add the following 
+Place the files ```__init__.py``` and ```manifest.json``` in the custom_components/aurum directory and add the following 
 to the configuration.yaml file (example):
 
 ```
