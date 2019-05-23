@@ -29,7 +29,7 @@ from homeassistant.helpers.event import async_track_time_interval
 
 REQUIREMENTS = ['paho-mqtt==1.4.0']
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ CONFIG_SCHEMA = vol.Schema({
     }),
 }, extra=vol.ALLOW_EXTRA)
 
-def setup(hass, config):
+async def async_setup(hass, config):
     """Initialize the AURUM MQTT consumer"""
     import paho.mqtt.client as mqtt
     conf = config[DOMAIN]
