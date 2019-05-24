@@ -29,7 +29,7 @@ from homeassistant.helpers.event import async_track_time_interval
 
 REQUIREMENTS = ['paho-mqtt==1.4.0']
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -68,13 +68,13 @@ async def async_setup(hass, config):
     mqttc.username_pw_set(username, password=password)
     mqttc.connect(broker, port=port, keepalive=keepalive)
 
-    def stop_aurum(event):
+    async def async_stop_aurum(event):
         """Stop the Aurum MQTT component."""
         mqttc.disconnect()
 
-    hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, stop_aurum)
+    hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, async_stop_aurum)
 
-    def get_aurum_data(event_time):
+    async def async_get_aurum_data(event_time):
         """Get the latest data from the AURUM API and send to the MQTT Broker."""
         try:
            url = 'http://{}/measurements/output.xml'.format(device)
@@ -90,6 +90,6 @@ async def async_setup(hass, config):
                    value = child.get('value')
                    mqttc.publish('homeassistant/sensor/aurum/{}'.format(parameter), value, qos=0, retain=True)
 
-    async_track_time_interval(hass, get_aurum_data, scan_interval)
+    async_track_time_interval(hass, async_get_aurum_data, scan_interval)
 
     return True
