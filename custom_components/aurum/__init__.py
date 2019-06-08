@@ -27,7 +27,7 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL, EVENT_HOMEASSISTANT_STOP)
 from homeassistant.helpers.event import async_track_time_interval
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 _LOGGER = logging.getLogger(__name__)
 
