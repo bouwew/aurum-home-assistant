@@ -27,8 +27,6 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL, EVENT_HOMEASSISTANT_STOP)
 from homeassistant.helpers.event import async_track_time_interval
 
-REQUIREMENTS = ['paho-mqtt==1.4.0']
-
 __version__ = '0.1.4'
 
 _LOGGER = logging.getLogger(__name__)
