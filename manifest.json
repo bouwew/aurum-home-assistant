@@ -1,8 +1,0 @@
-{
-  "domain": "aurum",
-  "name": "Home Assistant custom component for the Aurum Meetstekker",
-  "documentation": "https://github.com/bouwew/aurum-home-assistant",
-  "dependencies": [],
-  "codeowners": [],
-  "requirements": []
-}
