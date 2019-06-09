@@ -12,6 +12,9 @@ aurum:
    password: mqtt_password   # MQTT broker password
    username: mqtt_user       # MQTT username
    scan_interval: 20         # reporting interval, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seoconds)
+   
+PLAN: change the code so that the sensors are autodiscovered by HA!
+
 """
 import logging
 from datetime import timedelta
