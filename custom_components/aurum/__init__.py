@@ -83,26 +83,159 @@ async def async_setup(hass, config):
                            'counterElectricityInLow', 'counterElectricityOutLow', 'counterElectricityInHigh' \
                            'counterElectricityOutHigh', 'rateGas', 'counterGas']
         payload_0 = {
-                     'name':'powerBattery'
-                     'unit_of_meas':'W'
-                     'icon':'mdi:power'
-                     'state_topic':'aurum',
-           
-           
-           
-{\"unit_of_measurement\":\"%\",
- \"icon\":\"mdi:water\",
- \"value_template\":\"{{ value_json.$i }}\",
- \"state_topic\":\"ink2mqtt/CanonMG5300\",
- \"json_attributes_topic\":\"ink2mqtt/CanonMG5300\",
- \"name\":\"Canon MG5300 $i Ink Level\",
- \"unique_id\":\"Canon MG5300 series_"$i"_ink2mqtt\",
- \"device\":
-      {\"identifiers\":\"Canon MG5300 series\",
-       \"name\":\"Canon MG5300 series\",
-       \"sw_version\":\"2.030\",
-       \"model\":\"MG5300 series\",
-       \"manufacturer\":\"Canon\"
+                     'name':'powerBattery',
+                     'unit_of_meas':'W',
+                     'icon':'mdi:flash',
+                     'state_topic':'aurum'
+                    }
+        payload_1 = {
+                     'name':'counterOutBattery',
+                     'unit_of_meas':'kWh',
+                     'icon':'mdi:flash',
+                     'state_topic':'aurum'
+                    }
+        payload_2 = {
+                     'name':'counterInBattery',
+                     'unit_of_meas':'kWh',
+                     'icon':'mdi:flash',
+                     'state_topic':'aurum'
+                    }
+        payload_3 = {
+                     'name':'powerMCHP', 
+                     'unit_of_meas':'W',
+                     'icon':'mdi:flash',
+                     'state_topic':'aurum'
+                    }
+        payload_4 = {
+                     'name':'counterOutMCHP',
+                     'unit_of_meas':'kWh',
+                     'icon':'mdi:flash',
+                     'state_topic':'aurum'
+                    }
+        payload_5 = {
+                     'name':'counterInMCHP',
+                     'unit_of_meas':'kWh',
+                     'icon':'mdi:flash',
+                     'state_topic':'aurum'
+                    }
+        payload_6 = {
+                     'name':'powerSolar',
+                     'unit_of_meas':'W',
+                     'icon':'mdi:flash',
+                     'state_topic':'aurum'
+                    }
+        payload_7 = {
+                     'name':'counterOutSolar',
+                     'unit_of_meas':'kWh',
+                     'icon':'mdi:flash',
+                     'state_topic':'aurum'
+                    }
+        payload_8 = {
+                     'name':'counterInSolar',
+                     'unit_of_meas':'kWh',
+                     'icon':'mdi:flash',
+                     'state_topic':'aurum'
+                    }
+        payload_9 = {
+                     'name':'powerEV',
+                     'unit_of_meas':'W',
+                     'icon':'mdi:flash',
+                     'state_topic':'aurum'
+                    }
+        payload_10 = {
+                      'name':'counterOutEV', 
+                      'unit_of_meas':'kWh',
+                      'icon':'mdi:flash',
+                      'state_topic':'aurum'
+                    }
+        payload_11 = {
+                      'name':'counterInEV',
+                      'unit_of_meas':'kWh',
+                      'icon':'mdi:flash',
+                      'state_topic':'aurum'
+                    }      
+        payload_12 = {
+                      'name':'powerMain',
+                      'unit_of_meas':'W',
+                      'icon':'mdi:flash',
+                      'state_topic':'aurum'
+                    }
+        payload_13 = {
+                      'name':'counterOutMain',
+                      'unit_of_meas':'kWh',
+                      'icon':'mdi:flash',
+                      'state_topic':'aurum'
+                    }
+        payload_14 = {
+                      'name':'counterInMain',
+                      'unit_of_meas':'kWh',
+                      'icon':'mdi:flash',
+                      'state_topic':'aurum'
+                    }
+        payload_15 = {
+                      'name':'smartMeterTimestamp'
+                      'unit_of_meas':'',
+                      'icon':'mdi:av-timer',
+                      'state_topic':'aurum'
+                    }          
+        payload_16 = {
+                      'name':'powerElectricity'
+                      'unit_of_meas':'W',
+                      'icon':'mdi:flash',
+                      'state_topic':'aurum'
+                    }
+        payload_17 = {
+                      'name':'counterElectricityInLow',
+                      'unit_of_meas':'kWh',
+                      'icon':'mdi:flash',
+                      'state_topic':'aurum'
+                    }
+        payload_18 = {
+                      'name': 'counterElectricityOutLow',
+                      'unit_of_meas':'kWh',
+                      'icon':'mdi:flash',
+                      'state_topic':'aurum'
+                     {
+        payload_19 = {
+                      'name':'counterElectricityInHigh',
+                      'unit_of_meas':'kWh',
+                      'icon':'mdi:flash',
+                      'state_topic':'aurum'
+                    }
+        payload_20 = {
+                      'name':'counterElectricityOutHigh',
+                      'unit_of_meas':'kWh',
+                      'icon':'mdi:flash',
+                      'state_topic':'aurum'
+                     {
+        payload_21 = {
+                      'name':'rateGas',
+                      'unit_of_meas':'m3',
+                      'icon':'mdi:fire',
+                      'state_topic':'aurum'
+                    }
+        payload_22 = {
+                      'name':'counterGas',
+                      'unit_of_meas':'m3h,
+                      'icon':'mdi:fire',
+                      'state_topic':'aurum'
+                     {    
+                        
+ {
+ "unit_of_measurement":"%",
+ "icon":"mdi:water",
+ "value_template":"{{ value_json.$i }}",
+ "state_topic":"ink2mqtt/CanonMG5300",
+ "json_attributes_topic":"ink2mqtt/CanonMG5300",
+ "name":"Canon MG5300 $i Ink Level",
+ "unique_id":"Canon MG5300 series_"$i"_ink2mqtt",
+ "device":
+      {
+       "identifiers":"Canon MG5300 series",
+       "name":"Canon MG5300 series",
+       "sw_version":"2.030",
+       "model":"MG5300 series",
+       "manufacturer":"Canon"
        }
  }    
                      
