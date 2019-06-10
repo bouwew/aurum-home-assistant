@@ -30,7 +30,7 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL, EVENT_HOMEASSISTANT_STOP)
 from homeassistant.helpers.event import async_track_time_interval
 
-__version__ = '0.1.5'
+__version__ = '0.2.0'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -74,7 +74,22 @@ async def async_setup(hass, config):
         mqttc.disconnect()
 
     hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, async_stop_aurum)
-
+   
+    async def async_init_aurum_data():
+        """Get the topics from the AURUM API and send to the MQTT Broker."""
+        try:
+           url = 'http://{}/measurements/output.xml'.format(device)
+           tree = ET.parse(ur.urlopen(url))
+           root = tree.getroot()
+        except Exception as exception:
+           _LOGGER.error(
+               "Unable to fetch data from AURUM. %s", exception)    
+        else:
+           for child in root:
+               if(child is not None):
+                   parameter = child.tag
+                   mqttc.publish('homeassistant/sensor/aurum/{}'.format(parameter)/config, qos=0, retain=True)
+   
     async def async_get_aurum_data(event_time):
         """Get the latest data from the AURUM API and send to the MQTT Broker."""
         try:
@@ -89,8 +104,9 @@ async def async_setup(hass, config):
                if(child is not None):
                    parameter = child.tag
                    value = child.get('value')
-                   mqttc.publish('homeassistant/sensor/aurum/{}'.format(parameter), value, qos=0, retain=True)
-
+                   mqttc.publish('aurum/{}'.format(parameter), value, qos=0, retain=True)
+                     
+    async_init_aurum_data()
     async_track_time_interval(hass, async_get_aurum_data, scan_interval)
 
     return True
