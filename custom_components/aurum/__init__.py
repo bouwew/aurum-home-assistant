@@ -77,6 +77,11 @@ async def async_setup(hass, config):
    
     async def async_init_aurum_data():
         """Get the topics from the AURUM API and send to the MQTT Broker."""
+        json_attributes = ['powerBattery', 'counterOutBattery', 'counterInBattery', 'powerMCHP', 'counterOutMCHP', 'counterInMCHP', \
+                           'powerSolar', 'counterOutSolar', 'counterInSolar', 'powerEV', 'counterOutEV', 'counterInEV', \
+                           'powerMain', 'counterOutMain', 'counterInMain', 'smartMeterTimestamp', 'powerElectricity' \
+                           'counterElectricityInLow', 'counterElectricityOutLow', 'counterElectricityInHigh' \
+                           'counterElectricityOutHigh', 'rateGas', 'counterGas']
         try:
            url = 'http://{}/measurements/output.xml'.format(device)
            tree = ET.parse(ur.urlopen(url))
@@ -88,7 +93,25 @@ async def async_setup(hass, config):
            for child in root:
                if(child is not None):
                    parameter = child.tag
-                   mqttc.publish('homeassistant/sensor/aurum/{}'.format(parameter)/config, qos=0, retain=True)
+                   payload = { EXAMPLE! NEEDS UPDATING!
+                              "name":"Livingroom",
+                              "mode_cmd_t":"homeassistant/climate/livingroom/thermostatModeCmd",
+                              "mode_stat_t":"homeassistant/climate/livingroom/state",
+                              "mode_stat_tpl":"",
+                              "avty_t":"homeassistant/climate/livingroom/available",
+                              "pl_avail":"online",
+                              "pl_not_avail":"offline",
+                              "temp_cmd_t":"homeassistant/climate/livingroom/targetTempCmd",
+                              "temp_stat_t":"homeassistant/climate/livingroom/state",
+                              "temp_stat_tpl":"",
+                              "curr_temp_t":"homeassistant/climate/livingroom/state",
+                              "curr_temp_tpl":"",
+                              "min_temp":"15",
+                              "max_temp":"25",
+                              "temp_step":"0.5",
+                              "modes":["off", "heat"]
+                             }
+                   mqttc.publish('homeassistant/sensor/aurum/{}'.format(parameter)'/config', payload, qos=0, retain=True)
    
     async def async_get_aurum_data(event_time):
         """Get the latest data from the AURUM API and send to the MQTT Broker."""
