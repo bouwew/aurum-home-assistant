@@ -82,6 +82,30 @@ async def async_setup(hass, config):
                            'powerMain', 'counterOutMain', 'counterInMain', 'smartMeterTimestamp', 'powerElectricity' \
                            'counterElectricityInLow', 'counterElectricityOutLow', 'counterElectricityInHigh' \
                            'counterElectricityOutHigh', 'rateGas', 'counterGas']
+        payload_0 = {
+                     'name':'powerBattery'
+                     'unit_of_meas':'W'
+                     'icon':'mdi:power'
+                     'state_topic':'aurum',
+           
+           
+           
+{\"unit_of_measurement\":\"%\",
+ \"icon\":\"mdi:water\",
+ \"value_template\":\"{{ value_json.$i }}\",
+ \"state_topic\":\"ink2mqtt/CanonMG5300\",
+ \"json_attributes_topic\":\"ink2mqtt/CanonMG5300\",
+ \"name\":\"Canon MG5300 $i Ink Level\",
+ \"unique_id\":\"Canon MG5300 series_"$i"_ink2mqtt\",
+ \"device\":
+      {\"identifiers\":\"Canon MG5300 series\",
+       \"name\":\"Canon MG5300 series\",
+       \"sw_version\":\"2.030\",
+       \"model\":\"MG5300 series\",
+       \"manufacturer\":\"Canon\"
+       }
+ }    
+                     
         try:
            url = 'http://{}/measurements/output.xml'.format(device)
            tree = ET.parse(ur.urlopen(url))
@@ -95,6 +119,7 @@ async def async_setup(hass, config):
                    parameter = child.tag
                    payload = { EXAMPLE! NEEDS UPDATING!
                               "name":"Livingroom",
+                              'unit_of_meas':'
                               "mode_cmd_t":"homeassistant/climate/livingroom/thermostatModeCmd",
                               "mode_stat_t":"homeassistant/climate/livingroom/state",
                               "mode_stat_tpl":"",
