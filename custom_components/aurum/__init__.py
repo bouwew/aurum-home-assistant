@@ -52,242 +52,252 @@ CONFIG_SCHEMA = vol.Schema({
 }, extra=vol.ALLOW_EXTRA)
 
 async def async_setup(hass, config):
-    """Initialize the AURUM MQTT consumer"""
-    import paho.mqtt.client as mqtt
-    conf = config[DOMAIN]
-    device = conf.get(CONF_DEVICE)
-    broker = conf.get(CONF_BROKER)
-    username = conf.get(CONF_USERNAME)
-    password = conf.get(CONF_PASSWORD)
-    scan_interval = conf.get(CONF_SCAN_INTERVAL)
+   """Initialize the AURUM MQTT consumer"""
+   import paho.mqtt.client as mqtt
+   conf = config[DOMAIN]
+   device = conf.get(CONF_DEVICE)
+   broker = conf.get(CONF_BROKER)
+   username = conf.get(CONF_USERNAME)
+   password = conf.get(CONF_PASSWORD)
+   scan_interval = conf.get(CONF_SCAN_INTERVAL)
 
-    client_id = 'HomeAssistant'
-    port = 1883
-    keepalive = 55
+   client_id = 'HomeAssistant'
+   port = 1883
+   keepalive = 55
 
-    mqttc = mqtt.Client(client_id, protocol=mqtt.MQTTv311)
-    mqttc.username_pw_set(username, password=password)
-    mqttc.connect(broker, port=port, keepalive=keepalive)
+   mqttc = mqtt.Client(client_id, protocol=mqtt.MQTTv311)
+   mqttc.username_pw_set(username, password=password)
+   mqttc.connect(broker, port=port, keepalive=keepalive)
 
-    async def async_stop_aurum(event):
-        """Stop the Aurum MQTT component."""
-        mqttc.disconnect()
+   async def async_stop_aurum(event):
+      """Stop the Aurum MQTT component."""
+      mqttc.disconnect()
 
-    hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, async_stop_aurum)
+   hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, async_stop_aurum)
    
-    async def async_init_aurum_data():
-        """Get the topics from the AURUM API and send to the MQTT Broker."""
-        json_attributes = ['powerBattery', 'counterOutBattery', 'counterInBattery', 'powerMCHP', 'counterOutMCHP', 'counterInMCHP', \
-                           'powerSolar', 'counterOutSolar', 'counterInSolar', 'powerEV', 'counterOutEV', 'counterInEV', \
-                           'powerMain', 'counterOutMain', 'counterInMain', 'smartMeterTimestamp', 'powerElectricity' \
-                           'counterElectricityInLow', 'counterElectricityOutLow', 'counterElectricityInHigh' \
-                           'counterElectricityOutHigh', 'rateGas', 'counterGas']
-        payload_0 = {
+   async def async_init_aurum_data():
+      """Get the topics from the AURUM API and send to the MQTT Broker."""
+      json_attributes = ['powerBattery', 'counterOutBattery', 'counterInBattery', 'powerMCHP', 'counterOutMCHP', 'counterInMCHP', \
+                         'powerSolar', 'counterOutSolar', 'counterInSolar', 'powerEV', 'counterOutEV', 'counterInEV', \
+                         'powerMain', 'counterOutMain', 'counterInMain', 'smartMeterTimestamp', 'powerElectricity' \
+                         'counterElectricityInLow', 'counterElectricityOutLow', 'counterElectricityInHigh' \
+                         'counterElectricityOutHigh', 'rateGas', 'counterGas']
+      payload_powerBattery = {
                      'name':'powerBattery',
+                     'device_class':'meter',
                      'unit_of_meas':'W',
+                     'value_template':'{{ value_json.powerBattery}}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum'
                     }
-        payload_1 = {
-                     'name':'counterOutBattery',
+      payload_counterOutBattery = {
+                     'name':'counterOutBattery',                     
+                     'device_class':'meter',
                      'unit_of_meas':'kWh',
+                     'value_template':'{{ value_json.counterOutBattery}}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum'
                     }
-        payload_2 = {
+      payload_counterInBattery = {
                      'name':'counterInBattery',
+                     'device_class':'meter',
                      'unit_of_meas':'kWh',
+                     'value_template':'{{ value_json.counterInBattery}}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum'
                     }
-        payload_3 = {
-                     'name':'powerMCHP', 
+      payload_powerMCHP = {
+                     'name':'powerMCHP',
+                     'device_class':'meter',
                      'unit_of_meas':'W',
+                     'value_template':'{{ value_json.powerMCHP}}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum'
                     }
-        payload_4 = {
+      payload_counterOutMCHP = {
                      'name':'counterOutMCHP',
+                     'device_class':'meter',
                      'unit_of_meas':'kWh',
+                     'value_template':'{{ value_json.counterOutMCHP}}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum'
                     }
-        payload_5 = {
+      payload_counterInMCHP = {
                      'name':'counterInMCHP',
+                     'device_class':'meter',
                      'unit_of_meas':'kWh',
+                     'value_template':'{{ value_json.counterInMCHP}}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum'
                     }
-        payload_6 = {
+      payload_powerSolar = {
                      'name':'powerSolar',
+                     'device_class':'meter',
                      'unit_of_meas':'W',
+                     'value_template':'{{ value_json.powerSolar}}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum'
                     }
-        payload_7 = {
+      payload_counterOutSolar = {
                      'name':'counterOutSolar',
+                     'device_class':'meter',
                      'unit_of_meas':'kWh',
+                     'value_template':'{{ value_json.counterOutSolar}}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum'
                     }
-        payload_8 = {
+      payload_counterInSolar = {
                      'name':'counterInSolar',
+                     'device_class':'meter',
                      'unit_of_meas':'kWh',
+                     'value_template':'{{ value_json.counterInSolar}}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum'
                     }
-        payload_9 = {
+      payload_powerEV = {
                      'name':'powerEV',
+                     'device_class':'meter',
                      'unit_of_meas':'W',
+                     'value_template':'{{ value_json.powerEV}}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum'
                     }
-        payload_10 = {
-                      'name':'counterOutEV', 
+      payload_counterOutEV = {
+                      'name':'counterOutEV',
+                      'device_class':'meter',
                       'unit_of_meas':'kWh',
+                      'value_template':'{{ value_json.counterOutEV}}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum'
                     }
-        payload_11 = {
+      payload_counterInEV = {
                       'name':'counterInEV',
+                      'device_class':'meter',
                       'unit_of_meas':'kWh',
+                      'value_template':'{{ value_json.counterInEV}}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum'
                     }      
-        payload_12 = {
+      payload_powerMain = {
                       'name':'powerMain',
+                      'device_class':'meter',
                       'unit_of_meas':'W',
+                      'value_template':'{{ value_json.powerMain}}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum'
                     }
-        payload_13 = {
+      payload_counterOutMain = {
                       'name':'counterOutMain',
+                      'device_class':'meter',
                       'unit_of_meas':'kWh',
+                      'value_template':'{{ value_json.counterOutMain}}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum'
                     }
-        payload_14 = {
+      payload_counterInMain = {
                       'name':'counterInMain',
+                      'device_class':'meter',
                       'unit_of_meas':'kWh',
+                      'value_template':'{{value_json.counterInMain}}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum'
                     }
-        payload_15 = {
-                      'name':'smartMeterTimestamp'
-                      'unit_of_meas':'',
+      payload_smartMeterTimestamp = {
+                      'name':'smartMeterTimestamp',
+                      'device_class':'time_date',
+                      "unit_of_meas":"",
+                      'value_template':'{{value_json.smartMeterTimestamp}}',
                       'icon':'mdi:av-timer',
                       'state_topic':'aurum'
                     }          
-        payload_16 = {
-                      'name':'powerElectricity'
+      payload_powerElectricity = {
+                      'name':'powerElectricity',
+                      'device_class':'meter',
                       'unit_of_meas':'W',
+                      'value_template':'{{ value_json.powerElectricity}}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum'
                     }
-        payload_17 = {
+      payload_counterElectricityInLow = {
                       'name':'counterElectricityInLow',
+                      'device_class':'meter',
                       'unit_of_meas':'kWh',
+                      'value_template':'{{ value_json.counterElectricityInLow}}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum'
                     }
-        payload_18 = {
+      payload_counterElectricityOutLow = {
                       'name': 'counterElectricityOutLow',
+                      'device_class':'meter',
                       'unit_of_meas':'kWh',
+                      'value_template':'{{ value_json.counterElectricityOutLow}}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum'
-                     {
-        payload_19 = {
+                     }
+      payload_counterElectricityInHigh = {
                       'name':'counterElectricityInHigh',
+                      'device_class':'meter',
                       'unit_of_meas':'kWh',
+                      'value_template':'{{ value_json.counterElectricityInHigh}}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum'
                     }
-        payload_20 = {
+      payload_counterElectricityOutHigh = {
                       'name':'counterElectricityOutHigh',
+                      'device_class':'meter',
                       'unit_of_meas':'kWh',
+                      'value_template':'{{ value_json.counterElectricityOutHigh}}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum'
-                     {
-        payload_21 = {
+                     }
+      payload_rateGas = {
                       'name':'rateGas',
-                      'unit_of_meas':'m3',
+                      'device_class':'meter',
+                      'unit_of_meas':'m3/h',
+                      'value_template':'{{ value_json.rateGas}}',
                       'icon':'mdi:fire',
                       'state_topic':'aurum'
                     }
-        payload_22 = {
+      payload_counterGas = {
                       'name':'counterGas',
-                      'unit_of_meas':'m3h,
+                      'device_class':'meter',
+                      'unit_of_meas':'m3',
+                      'value_template':'{{ value_json.counterGas}}',
                       'icon':'mdi:fire',
                       'state_topic':'aurum'
-                     {    
-                        
- {
- "unit_of_measurement":"%",
- "icon":"mdi:water",
- "value_template":"{{ value_json.$i }}",
- "state_topic":"ink2mqtt/CanonMG5300",
- "json_attributes_topic":"ink2mqtt/CanonMG5300",
- "name":"Canon MG5300 $i Ink Level",
- "unique_id":"Canon MG5300 series_"$i"_ink2mqtt",
- "device":
-      {
-       "identifiers":"Canon MG5300 series",
-       "name":"Canon MG5300 series",
-       "sw_version":"2.030",
-       "model":"MG5300 series",
-       "manufacturer":"Canon"
-       }
- }    
-                     
-        try:
-           url = 'http://{}/measurements/output.xml'.format(device)
-           tree = ET.parse(ur.urlopen(url))
-           root = tree.getroot()
-        except Exception as exception:
-           _LOGGER.error(
-               "Unable to fetch data from AURUM. %s", exception)    
-        else:
-           for child in root:
-               if(child is not None):
-                   parameter = child.tag
-                   payload = { EXAMPLE! NEEDS UPDATING!
-                              "name":"Livingroom",
-                              'unit_of_meas':'
-                              "mode_cmd_t":"homeassistant/climate/livingroom/thermostatModeCmd",
-                              "mode_stat_t":"homeassistant/climate/livingroom/state",
-                              "mode_stat_tpl":"",
-                              "avty_t":"homeassistant/climate/livingroom/available",
-                              "pl_avail":"online",
-                              "pl_not_avail":"offline",
-                              "temp_cmd_t":"homeassistant/climate/livingroom/targetTempCmd",
-                              "temp_stat_t":"homeassistant/climate/livingroom/state",
-                              "temp_stat_tpl":"",
-                              "curr_temp_t":"homeassistant/climate/livingroom/state",
-                              "curr_temp_tpl":"",
-                              "min_temp":"15",
-                              "max_temp":"25",
-                              "temp_step":"0.5",
-                              "modes":["off", "heat"]
-                             }
-                   mqttc.publish('homeassistant/sensor/aurum/{}'.format(parameter)'/config', payload, qos=0, retain=True)
+                     }    
+      
+      try:
+         url = 'http://{}/measurements/output.xml'.format(device)
+         tree = ET.parse(ur.urlopen(url))
+         root = tree.getroot()
+      except Exception as exception:
+         _LOGGER.error(
+             "Unable to fetch data from AURUM. %s", exception)    
+      else:
+         for child in root:
+             if(child is not None):
+                 parameter = child.tag
+                 payload = "payload_"+str(parameter)
+                 mqttc.publish('homeassistant/sensor/aurum/{}'.format(parameter)'/config', globals()[payload], qos=0, retain=True)
    
-    async def async_get_aurum_data(event_time):
-        """Get the latest data from the AURUM API and send to the MQTT Broker."""
-        try:
-           url = 'http://{}/measurements/output.xml'.format(device)
-           tree = ET.parse(ur.urlopen(url))
-           root = tree.getroot()
-        except Exception as exception:
-           _LOGGER.error(
-               "Unable to fetch data from AURUM. %s", exception)    
-        else:
-           for child in root:
-               if(child is not None):
-                   parameter = child.tag
-                   value = child.get('value')
-                   mqttc.publish('aurum/{}'.format(parameter), value, qos=0, retain=True)
+   async def async_get_aurum_data(event_time):
+       """Get the latest data from the AURUM API and send to the MQTT Broker."""
+       try:
+          url = 'http://{}/measurements/output.xml'.format(device)
+          tree = ET.parse(ur.urlopen(url))
+          root = tree.getroot()
+       except Exception as exception:
+          _LOGGER.error(
+              "Unable to fetch data from AURUM. %s", exception)    
+       else:
+          for child in root:
+              if(child is not None):
+                  parameter = child.tag
+                  value = child.get('value')
+                  mqttc.publish('aurum/{}'.format(parameter), value, qos=0, retain=True)
                      
-    async_init_aurum_data()
-    async_track_time_interval(hass, async_get_aurum_data, scan_interval)
+   async_init_aurum_data()
+   async_track_time_interval(hass, async_get_aurum_data, scan_interval)
 
-    return True
+   return True
