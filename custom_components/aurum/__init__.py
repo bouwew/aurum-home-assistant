@@ -77,11 +77,13 @@ async def async_setup(hass, config):
    
    async def async_init_aurum_data():
       """Get the topics from the AURUM API and send to the MQTT Broker."""
+      """
       json_attributes = ['powerBattery', 'counterOutBattery', 'counterInBattery', 'powerMCHP', 'counterOutMCHP', 'counterInMCHP', \
                          'powerSolar', 'counterOutSolar', 'counterInSolar', 'powerEV', 'counterOutEV', 'counterInEV', \
                          'powerMain', 'counterOutMain', 'counterInMain', 'smartMeterTimestamp', 'powerElectricity' \
                          'counterElectricityInLow', 'counterElectricityOutLow', 'counterElectricityInHigh' \
                          'counterElectricityOutHigh', 'rateGas', 'counterGas']
+      """
       payload_powerBattery = {
                      'name':'powerBattery',
                      'device_class':'meter',
@@ -265,8 +267,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.counterGas}}',
                       'icon':'mdi:fire',
                       'state_topic':'aurum'
-                     }    
-      
+                     }      
       try:
          url = 'http://{}/measurements/output.xml'.format(device)
          tree = ET.parse(ur.urlopen(url))
@@ -295,7 +296,8 @@ async def async_setup(hass, config):
               if(child is not None):
                   parameter = child.tag
                   value = child.get('value')
-                  mqttc.publish('aurum/{}'.format(parameter), value, qos=0, retain=True)
+                  j_str = json.dumps({parameter:value})
+                  mqttc.publish('aurum/{}'.format(parameter), j_str, qos=0, retain=True)
                      
    async_init_aurum_data()
    async_track_time_interval(hass, async_get_aurum_data, scan_interval)
