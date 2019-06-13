@@ -18,6 +18,7 @@ PLAN: change the code so that the sensors are autodiscovered by HA!
 """
 import logging
 from datetime import timedelta
+import json
 
 import voluptuous as vol
 
@@ -83,7 +84,7 @@ async def async_setup(hass, config):
                      'unit_of_meas':'W',
                      'value_template':'{{ value_json.powerBattery}}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum_test/sensors'
                     }
       payload_counterOutBattery = {
                      'name':'counterOutBattery',                     
@@ -91,7 +92,7 @@ async def async_setup(hass, config):
                      'unit_of_meas':'kWh',
                      'value_template':'{{ value_json.counterOutBattery}}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum_test/sensors'
                     }
       payload_counterInBattery = {
                      'name':'counterInBattery',
@@ -99,7 +100,7 @@ async def async_setup(hass, config):
                      'unit_of_meas':'kWh',
                      'value_template':'{{ value_json.counterInBattery}}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum_test/sensors'
                     }
       payload_powerMCHP = {
                      'name':'powerMCHP',
@@ -107,7 +108,7 @@ async def async_setup(hass, config):
                      'unit_of_meas':'W',
                      'value_template':'{{ value_json.powerMCHP}}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum_test/sensors'
                     }
       payload_counterOutMCHP = {
                      'name':'counterOutMCHP',
@@ -115,7 +116,7 @@ async def async_setup(hass, config):
                      'unit_of_meas':'kWh',
                      'value_template':'{{ value_json.counterOutMCHP}}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum_test/sensors'
                     }
       payload_counterInMCHP = {
                      'name':'counterInMCHP',
@@ -123,7 +124,7 @@ async def async_setup(hass, config):
                      'unit_of_meas':'kWh',
                      'value_template':'{{ value_json.counterInMCHP}}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum_test/sensors'
                     }
       payload_powerSolar = {
                      'name':'powerSolar',
@@ -131,7 +132,7 @@ async def async_setup(hass, config):
                      'unit_of_meas':'W',
                      'value_template':'{{ value_json.powerSolar}}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum_test/sensors'
                     }
       payload_counterOutSolar = {
                      'name':'counterOutSolar',
@@ -139,7 +140,7 @@ async def async_setup(hass, config):
                      'unit_of_meas':'kWh',
                      'value_template':'{{ value_json.counterOutSolar}}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum_test/sensors'
                     }
       payload_counterInSolar = {
                      'name':'counterInSolar',
@@ -147,7 +148,7 @@ async def async_setup(hass, config):
                      'unit_of_meas':'kWh',
                      'value_template':'{{ value_json.counterInSolar}}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum_test/sensors'
                     }
       payload_powerEV = {
                      'name':'powerEV',
@@ -155,7 +156,7 @@ async def async_setup(hass, config):
                      'unit_of_meas':'W',
                      'value_template':'{{ value_json.powerEV}}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum_test/sensors'
                     }
       payload_counterOutEV = {
                       'name':'counterOutEV',
@@ -163,7 +164,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'kWh',
                       'value_template':'{{ value_json.counterOutEV}}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                     }
       payload_counterInEV = {
                       'name':'counterInEV',
@@ -171,7 +172,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'kWh',
                       'value_template':'{{ value_json.counterInEV}}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                     }      
       payload_powerMain = {
                       'name':'powerMain',
@@ -179,7 +180,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'W',
                       'value_template':'{{ value_json.powerMain}}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                     }
       payload_counterOutMain = {
                       'name':'counterOutMain',
@@ -187,7 +188,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'kWh',
                       'value_template':'{{ value_json.counterOutMain}}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                     }
       payload_counterInMain = {
                       'name':'counterInMain',
@@ -195,7 +196,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'kWh',
                       'value_template':'{{value_json.counterInMain}}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                     }
       payload_smartMeterTimestamp = {
                       'name':'smartMeterTimestamp',
@@ -203,7 +204,7 @@ async def async_setup(hass, config):
                       "unit_of_meas":"",
                       'value_template':'{{value_json.smartMeterTimestamp}}',
                       'icon':'mdi:av-timer',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                     }          
       payload_powerElectricity = {
                       'name':'powerElectricity',
@@ -211,7 +212,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'W',
                       'value_template':'{{ value_json.powerElectricity}}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                     }
       payload_counterElectricityInLow = {
                       'name':'counterElectricityInLow',
@@ -219,7 +220,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'kWh',
                       'value_template':'{{ value_json.counterElectricityInLow}}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                     }
       payload_counterElectricityOutLow = {
                       'name': 'counterElectricityOutLow',
@@ -227,7 +228,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'kWh',
                       'value_template':'{{ value_json.counterElectricityOutLow}}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                      }
       payload_counterElectricityInHigh = {
                       'name':'counterElectricityInHigh',
@@ -235,7 +236,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'kWh',
                       'value_template':'{{ value_json.counterElectricityInHigh}}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                     }
       payload_counterElectricityOutHigh = {
                       'name':'counterElectricityOutHigh',
@@ -243,7 +244,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'kWh',
                       'value_template':'{{ value_json.counterElectricityOutHigh}}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                      }
       payload_rateGas = {
                       'name':'rateGas',
@@ -251,7 +252,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'m3/h',
                       'value_template':'{{ value_json.rateGas}}',
                       'icon':'mdi:fire',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                     }
       payload_counterGas = {
                       'name':'counterGas',
@@ -259,7 +260,7 @@ async def async_setup(hass, config):
                       'unit_of_meas':'m3',
                       'value_template':'{{ value_json.counterGas}}',
                       'icon':'mdi:fire',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum_test/sensors'
                      }      
       try:
          url = 'http://{}/measurements/output.xml'.format(device)
@@ -269,32 +270,31 @@ async def async_setup(hass, config):
          _LOGGER.error("Unable to fetch data from AURUM. %s", exception)    
       else:
          for child in root:
-             if(child is not None):
-                 parameter = child.tag
-                 payload = "payload_"+str(parameter)
-                 mqttc.publish('homeassistant/sensor/aurum/{}'.format(parameter)'/config', globals()[payload], qos=0, retain=True)
+            if(child is not None):
+               parameter = child.tag
+               payload = "payload_"+str(parameter)
+               mqttc.publish('homeassistant/sensor/aurum_test/{}/config'.format(parameter), globals()[payload], qos=0, retain=True)
    
    async def async_get_aurum_data(event_time):
-       """Get the latest data from the AURUM API and send to the MQTT Broker."""
-       try:
-          url = 'http://{}/measurements/output.xml'.format(device)
-          tree = ET.parse(ur.urlopen(url))
-          root = tree.getroot()
-       except Exception as exception:
-          _LOGGER.error(
-              "Unable to fetch data from AURUM. %s", exception)    
-       else:
-          data=[]         
-          for child in root:
-              if(child is not None):
-                  parameter = child.tag
-                  value = child.get('value')
-                  j_str = json.dumps({parameter:value})
-                  j_str = j_str.replace("{", "").replace("\"", "").replace("}", "")
-                  data.append(j_str)
-          mqtt_message=json.dumps(data)
-          mqtt_message = mqtt_message.replace("[", "{").replace("]", "}")
-          mqttc.publish('aurum/sensors', mqtt_message, qos=0, retain=True)
+      """Get the latest data from the AURUM API and send to the MQTT Broker."""
+      try:
+         url = 'http://{}/measurements/output.xml'.format(device)
+         tree = ET.parse(ur.urlopen(url))
+         root = tree.getroot()
+      except Exception as exception:
+         _LOGGER.error("Unable to fetch data from AURUM. %s", exception)    
+      else:
+         data=[]
+         for child in root:
+            if(child is not None):
+               parameter = child.tag
+               value = child.get('value')
+               j_str = json.dumps({parameter:value})
+               j_str = j_str.replace("{", "").replace("\"", "").replace("}", "")
+               data.append(j_str)
+         mqtt_message=json.dumps(data)
+         mqtt_message = mqtt_message.replace("[", "{").replace("]", "}")
+         mqttc.publish('aurum_test/sensors', mqtt_message, qos=0, retain=True)
                      
    async_init_aurum_data()
    async_track_time_interval(hass, async_get_aurum_data, scan_interval)
