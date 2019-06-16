@@ -138,7 +138,7 @@ async def async_setup(hass, config):
                               }
                     }
       payload_counterOutMCHP = {
-                     'name':'aurum_mcp_counter_out',
+                     'name':'aurum_mchp_counter_out',
                      'unit_of_meas':'kWh',
                      'value_template':'{{ value_json.counterOutMCHP }}',
                      'icon':'mdi:flash',
