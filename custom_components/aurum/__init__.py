@@ -32,7 +32,7 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL, EVENT_HOMEASSISTANT_START, EVENT_HOMEASSISTANT_STOP)
 from homeassistant.helpers.event import async_track_time_interval
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -83,163 +83,347 @@ async def async_setup(hass, config):
       payload_powerBattery = {
                      'name':'aurum_powerBattery',
                      'unit_of_meas':'W',
-                     'value_template':'{{ value_json.powerBattery}}',
+                     'value_template':'{{ value_json.powerBattery }}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum/sensors',
+                     'json_attributes_topic':'aurum/sensors',
+                     'unique_id':'aurum_powerBattery_sensor',
+                     'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterOutBattery = {
                      'name':'aurum_counterOutBattery',
                      'unit_of_meas':'kWh',
-                     'value_template':'{{ value_json.counterOutBattery}}',
+                     'value_template':'{{ value_json.counterOutBattery }}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum/sensors',
+                     'json_attributes_topic':'aurum/sensors',
+                     'unique_id':'aurum_counterOutBattery_sensor',
+                     'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterInBattery = {
                      'name':'aurum_counterInBattery',
                      'unit_of_meas':'kWh',
-                     'value_template':'{{ value_json.counterInBattery}}',
+                     'value_template':'{{ value_json.counterInBattery }}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum/sensors',
+                     'json_attributes_topic':'aurum/sensors',
+                     'unique_id':'aurum_counterInBattery_sensor',
+                     'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_powerMCHP = {
                      'name':'aurum_powerMCHP',
                      'unit_of_meas':'W',
-                     'value_template':'{{ value_json.powerMCHP}}',
+                     'value_template':'{{ value_json.powerMCHP }}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum/sensors',
+                     'json_attributes_topic':'aurum/sensors',
+                     'unique_id':'aurum_powerMCHP_sensor',
+                     'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterOutMCHP = {
                      'name':'aurum_counterOutMCHP',
                      'unit_of_meas':'kWh',
-                     'value_template':'{{ value_json.counterOutMCHP}}',
+                     'value_template':'{{ value_json.counterOutMCHP }}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum/sensors',
+                     'json_attributes_topic':'aurum/sensors',
+                     'unique_id':'aurum_counterOutMCHP_sensor',
+                     'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterInMCHP = {
                      'name':'aurum_counterInMCHP',
                      'unit_of_meas':'kWh',
-                     'value_template':'{{ value_json.counterInMCHP}}',
+                     'value_template':'{{ value_json.counterInMCHP }}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum/sensors',
+                     'json_attributes_topic':'aurum/sensors',
+                     'unique_id':'aurum_counterInMCHP_sensor',
+                     'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_powerSolar = {
                      'name':'aurum_powerSolar',
                      'unit_of_meas':'W',
-                     'value_template':'{{ value_json.powerSolar}}',
+                     'value_template':'{{ value_json.powerSolar }}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum/sensors',
+                     'json_attributes_topic':'aurum/sensors',
+                     'unique_id':'aurum_powerSolar_sensor',
+                     'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterOutSolar = {
                      'name':'aurum_counterOutSolar',
                      'unit_of_meas':'kWh',
-                     'value_template':'{{ value_json.counterOutSolar}}',
+                     'value_template':'{{ value_json.counterOutSolar }}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum/sensors',
+                     'json_attributes_topic':'aurum/sensors',
+                     'unique_id':'aurum_counterOutSolar_sensor',
+                     'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterInSolar = {
                      'name':'aurum_counterInSolar',
                      'unit_of_meas':'kWh',
-                     'value_template':'{{ value_json.counterInSolar}}',
+                     'value_template':'{{ value_json.counterInSolar }}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum/sensors',
+                     'json_attributes_topic':'aurum/sensors',
+                     'unique_id':'aurum_counterInSolar_sensor',
+                     'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_powerEV = {
                      'name':'aurum_powerEV',
                      'unit_of_meas':'W',
-                     'value_template':'{{ value_json.powerEV}}',
+                     'value_template':'{{ value_json.powerEV }}',
                      'icon':'mdi:flash',
-                     'state_topic':'aurum/sensors'
+                     'state_topic':'aurum/sensors',
+                     'json_attributes_topic':'aurum/sensors',
+                     'unique_id':'aurum_powerEV_sensor',
+                     'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterOutEV = {
                       'name':'aurum_counterOutEV',
                       'unit_of_meas':'kWh',
-                      'value_template':'{{ value_json.counterOutEV}}',
+                      'value_template':'{{ value_json.counterOutEV }}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_counterOutEV_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterInEV = {
                       'name':'aurum_counterInEV',
                       'unit_of_meas':'kWh',
-                      'value_template':'{{ value_json.counterInEV}}',
+                      'value_template':'{{ value_json.counterInEV }}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_counterInEV_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }      
       payload_powerMain = {
                       'name':'aurum_powerMain',
                       'unit_of_meas':'W',
-                      'value_template':'{{ value_json.powerMain}}',
+                      'value_template':'{{ value_json.powerMain }}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_powerMain_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterOutMain = {
                       'name':'aurum_counterOutMain',
                       'unit_of_meas':'kWh',
-                      'value_template':'{{ value_json.counterOutMain}}',
+                      'value_template':'{{ value_json.counterOutMain }}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_counterOutMain_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterInMain = {
                       'name':'aurum_counterInMain',
                       'unit_of_meas':'kWh',
-                      'value_template':'{{value_json.counterInMain}}',
+                      'value_template':'{{ value_json.counterInMain }}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_counterInMain_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_smartMeterTimestamp = {
                       'name':'aurum_smartMeterTimestamp',
                       "unit_of_meas":"",
-                      'value_template':'{{value_json.smartMeterTimestamp}}',
+                      'value_template':'{{ value_json.smartMeterTimestamp }}',
                       'icon':'mdi:av-timer',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_smartMeterTimestamp_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }          
       payload_powerElectricity = {
                       'name':'aurum_powerElectricity',
                       'unit_of_meas':'W',
-                      'value_template':'{{ value_json.powerElectricity}}',
+                      'value_template':'{{ value_json.powerElectricity }}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_powerElectricity_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterElectricityInLow = {
                       'name':'aurum_counterElectricityInLow',
                       'unit_of_meas':'kWh',
-                      'value_template':'{{ value_json.counterElectricityInLow}}',
+                      'value_template':'{{ value_json.counterElectricityInLow }}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_counterElectricityInLow_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterElectricityOutLow = {
                       'name':'aurum_counterElectricityOutLow',
                       'unit_of_meas':'kWh',
-                      'value_template':'{{ value_json.counterElectricityOutLow}}',
+                      'value_template':'{{ value_json.counterElectricityOutLow }}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_counterElectricityOutLow_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                      }
       payload_counterElectricityInHigh = {
                       'name':'aurum_counterElectricityInHigh',
                       'unit_of_meas':'kWh',
-                      'value_template':'{{ value_json.counterElectricityInHigh}}',
+                      'value_template':'{{ value_json.counterElectricityInHigh }}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_counterElectricityInHigh_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterElectricityOutHigh = {
                       'name':'aurum_counterElectricityOutHigh',
                       'unit_of_meas':'kWh',
-                      'value_template':'{{ value_json.counterElectricityOutHigh}}',
+                      'value_template':'{{ value_json.counterElectricityOutHigh }}',
                       'icon':'mdi:flash',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_counterElectricityOutHigh_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                      }
       payload_rateGas = {
                       'name':'aurum_rateGas',
                       'unit_of_meas':'m3/h',
-                      'value_template':'{{ value_json.rateGas}}',
+                      'value_template':'{{ value_json.rateGas }}',
                       'icon':'mdi:fire',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_rateGas_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                     }
       payload_counterGas = {
                       'name':'aurum_counterGas',
                       'unit_of_meas':'m3',
-                      'value_template':'{{ value_json.counterGas}}',
+                      'value_template':'{{ value_json.counterGas }}',
                       'icon':'mdi:fire',
-                      'state_topic':'aurum/sensors'
+                      'state_topic':'aurum/sensors',
+                      'json_attributes_topic':'aurum/sensors',
+                      'unique_id':'aurum_counterGas_sensor',
+                      'device':{
+                              'identifiers':'Aurum Meetstekker',
+                              'name':'Aurum Meetstekker',
+                              'model':'Meetstekker',
+                              'manufacturer':'Aurum'
+                              }
                      }
       global REGISTERED
       if REGISTERED == 0:
