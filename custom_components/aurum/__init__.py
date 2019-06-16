@@ -12,6 +12,9 @@ aurum:
    password: mqtt_password   # MQTT broker password
    username: mqtt_user       # MQTT username
    scan_interval: 20         # reporting interval, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seoconds)
+   
+PLAN: change the code so that the sensors are autodiscovered by HA!
+
 """
 import logging
 from datetime import timedelta
@@ -29,7 +32,7 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL, EVENT_HOMEASSISTANT_START, EVENT_HOMEASSISTANT_STOP)
 from homeassistant.helpers.event import async_track_time_interval
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -83,7 +86,6 @@ async def async_setup(hass, config):
                      'value_template':'{{ value_json.powerBattery }}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum/sensors',
-                     'json_attributes_topic':'aurum/sensors',
                      'unique_id':'aurum_powerBattery_sensor',
                      'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -98,7 +100,6 @@ async def async_setup(hass, config):
                      'value_template':'{{ value_json.counterOutBattery }}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum/sensors',
-                     'json_attributes_topic':'aurum/sensors',
                      'unique_id':'aurum_counterOutBattery_sensor',
                      'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -107,13 +108,13 @@ async def async_setup(hass, config):
                               'manufacturer':'Aurum'
                               }
                     }
+
       payload_counterInBattery = {
                      'name':'aurum_counterInBattery',
                      'unit_of_meas':'kWh',
                      'value_template':'{{ value_json.counterInBattery }}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum/sensors',
-                     'json_attributes_topic':'aurum/sensors',
                      'unique_id':'aurum_counterInBattery_sensor',
                      'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -128,7 +129,6 @@ async def async_setup(hass, config):
                      'value_template':'{{ value_json.powerMCHP }}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum/sensors',
-                     'json_attributes_topic':'aurum/sensors',
                      'unique_id':'aurum_powerMCHP_sensor',
                      'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -143,7 +143,6 @@ async def async_setup(hass, config):
                      'value_template':'{{ value_json.counterOutMCHP }}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum/sensors',
-                     'json_attributes_topic':'aurum/sensors',
                      'unique_id':'aurum_counterOutMCHP_sensor',
                      'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -158,7 +157,6 @@ async def async_setup(hass, config):
                      'value_template':'{{ value_json.counterInMCHP }}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum/sensors',
-                     'json_attributes_topic':'aurum/sensors',
                      'unique_id':'aurum_counterInMCHP_sensor',
                      'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -173,7 +171,6 @@ async def async_setup(hass, config):
                      'value_template':'{{ value_json.powerSolar }}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum/sensors',
-                     'json_attributes_topic':'aurum/sensors',
                      'unique_id':'aurum_powerSolar_sensor',
                      'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -188,7 +185,6 @@ async def async_setup(hass, config):
                      'value_template':'{{ value_json.counterOutSolar }}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum/sensors',
-                     'json_attributes_topic':'aurum/sensors',
                      'unique_id':'aurum_counterOutSolar_sensor',
                      'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -203,7 +199,6 @@ async def async_setup(hass, config):
                      'value_template':'{{ value_json.counterInSolar }}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum/sensors',
-                     'json_attributes_topic':'aurum/sensors',
                      'unique_id':'aurum_counterInSolar_sensor',
                      'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -218,7 +213,6 @@ async def async_setup(hass, config):
                      'value_template':'{{ value_json.powerEV }}',
                      'icon':'mdi:flash',
                      'state_topic':'aurum/sensors',
-                     'json_attributes_topic':'aurum/sensors',
                      'unique_id':'aurum_powerEV_sensor',
                      'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -233,7 +227,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.counterOutEV }}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_counterOutEV_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -248,7 +242,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.counterInEV }}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_counterInEV_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -263,7 +257,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.powerMain }}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_powerMain_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -278,7 +272,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.counterOutMain }}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_counterOutMain_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -293,7 +287,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.counterInMain }}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_counterInMain_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -308,7 +302,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.smartMeterTimestamp }}',
                       'icon':'mdi:av-timer',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_smartMeterTimestamp_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -323,7 +317,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.powerElectricity }}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_powerElectricity_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -338,7 +332,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.counterElectricityInLow }}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_counterElectricityInLow_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -353,7 +347,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.counterElectricityOutLow }}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_counterElectricityOutLow_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -368,7 +362,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.counterElectricityInHigh }}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_counterElectricityInHigh_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -383,7 +377,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.counterElectricityOutHigh }}',
                       'icon':'mdi:flash',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_counterElectricityOutHigh_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -398,7 +392,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.rateGas }}',
                       'icon':'mdi:fire',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_rateGas_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
@@ -413,7 +407,7 @@ async def async_setup(hass, config):
                       'value_template':'{{ value_json.counterGas }}',
                       'icon':'mdi:fire',
                       'state_topic':'aurum/sensors',
-                      'json_attributes_topic':'aurum/sensors',
+
                       'unique_id':'aurum_counterGas_sensor',
                       'device':{
                               'identifiers':'Aurum Meetstekker',
