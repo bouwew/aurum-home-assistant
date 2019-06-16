@@ -11,6 +11,7 @@ aurum:
    broker: 192.168.0.111      # ip adress of the MQTT broker
    password: mqtt_password   # MQTT broker password
    username: mqtt_user       # MQTT username
+   client: HA_client_name    # default is HomeAssistant, if you have more active clients, use another ID
    scan_interval: 20         # reporting interval, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seoconds)
    
 PLAN: change the code so that the sensors are autodiscovered by HA!
@@ -32,15 +33,17 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL, EVENT_HOMEASSISTANT_START, EVENT_HOMEASSISTANT_STOP)
 from homeassistant.helpers.event import async_track_time_interval
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 _LOGGER = logging.getLogger(__name__)
 
 REGISTERED = 0
 
 CONF_BROKER = 'broker'
+CONF_CLIENT_ID = 'client_id'
 
 DOMAIN = 'aurum'
+DEFAULT_CLIENT_ID = "HomeAssistant'
 
 SCAN_INTERVAL = timedelta(seconds=60)
 
@@ -50,6 +53,7 @@ CONFIG_SCHEMA = vol.Schema({
         vol.Required(CONF_BROKER): cv.string,
         vol.Required(CONF_USERNAME): cv.string,
         vol.Required(CONF_PASSWORD): cv.string,
+        vol.Optional(CONF_CLIENT_ID, default=DEFAULT_CLIENT_ID): cv.string,
         vol.Optional(CONF_SCAN_INTERVAL, default=SCAN_INTERVAL):
             cv.time_period,
     }),
@@ -62,13 +66,13 @@ async def async_setup(hass, config):
    broker = conf.get(CONF_BROKER)
    username = conf.get(CONF_USERNAME)
    password = conf.get(CONF_PASSWORD)
+   client = conf.get(CONF_CLIENT_ID)
    scan_interval = conf.get(CONF_SCAN_INTERVAL)
 
-   client_id = 'HomeAssistant'
    port = 1883
    keepalive = 55
 
-   mqttc = mqtt.Client(client_id, protocol=mqtt.MQTTv311)
+   mqttc = mqtt.Client(client, protocol=mqtt.MQTTv311)
    mqttc.username_pw_set(username, password=password)
    mqttc.connect(broker, port=port, keepalive=keepalive)
 
