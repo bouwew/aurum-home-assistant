@@ -1,15 +1,16 @@
 __Support for power production and consumption values and counters from the AURUM Meetstekker web-page.__
 
-Place the files ```__init__.py``` and ```manifest.json``` in the custom_components/aurum directory and add the following 
+Place the files ```__init__.py``` and ```manifest.json``` in the ```custom_components/aurum``` directory and add the following 
 to the configuration.yaml file (example):
 
 ```
 aurum:
-   device: 192.168.0.110     # ip adress of the meetstekker
-   broker: 192.168.0.111     # ip adress of the MQTT broker you will use
+   device: 192.168.0.110     # IP adress of the Aurum meetstekker
+   broker: 192.168.0.111     # IP adress of the MQTT broker that will be used to connect to
    password: mqtt_password   # MQTT broker password
    username: mqtt_user       # MQTT username
-   scan_interval: 20         # reporting interval, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seoconds)
+   client: aurum             # MQTT client-id, optional, default set to 'aurum'
+   scan_interval: 20         # reporting interval, optional, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seconds)
 ```
 
 Sensors can be created via:
