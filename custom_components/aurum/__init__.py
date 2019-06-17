@@ -9,32 +9,33 @@ Configuration (example):
 aurum:
    device: 192.168.0.110      # ip adress of the meetstekker
    broker: 192.168.0.111      # ip adress of the MQTT broker
-   password: mqtt_password   # MQTT broker password
-   username: mqtt_user       # MQTT username
-   scan_interval: 20         # reporting interval, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seoconds)
+   password: mqtt_password    # MQTT broker password
+   username: mqtt_user        # MQTT username
+   client: aurum              # MQTT client-id, optional, default set to 'aurum'
+   scan_interval: 20          # reporting interval, optional, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seoconds)
 """
 import logging
-from datetime import timedelta
-
 import voluptuous as vol
-
 import urllib.request as ur
 import xml.etree.ElementTree as ET
-
 import homeassistant.helpers.config_validation as cv
+import paho.mqtt.client as mqtt
+
 from homeassistant.const import (
     CONF_DEVICE, CONF_PASSWORD, CONF_USERNAME, 
     CONF_SCAN_INTERVAL, EVENT_HOMEASSISTANT_STOP)
 from homeassistant.helpers.event import async_track_time_interval
+from datetime import timedelta
 
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 
 _LOGGER = logging.getLogger(__name__)
 
-CONF_BROKER = 'broker'
-
 DOMAIN = 'aurum'
 
+CONF_BROKER = 'broker'
+CONF_CLIENT = 'client'
+DEFAULT_CL = 'aurum'
 SCAN_INTERVAL = timedelta(seconds=60)
 
 CONFIG_SCHEMA = vol.Schema({
@@ -43,6 +44,7 @@ CONFIG_SCHEMA = vol.Schema({
         vol.Required(CONF_BROKER): cv.string,
         vol.Required(CONF_USERNAME): cv.string,
         vol.Required(CONF_PASSWORD): cv.string,
+        vol.Optional(CONF_CLIENT, default=DEFAULT_CL): cv.string,
         vol.Optional(CONF_SCAN_INTERVAL, default=SCAN_INTERVAL):
             cv.time_period,
     }),
@@ -50,15 +52,15 @@ CONFIG_SCHEMA = vol.Schema({
 
 async def async_setup(hass, config):
     """Initialize the AURUM MQTT consumer"""
-    import paho.mqtt.client as mqtt
     conf = config[DOMAIN]
     device = conf.get(CONF_DEVICE)
     broker = conf.get(CONF_BROKER)
     username = conf.get(CONF_USERNAME)
     password = conf.get(CONF_PASSWORD)
+    client = conf.get(CONF_CLIENT)
     scan_interval = conf.get(CONF_SCAN_INTERVAL)
 
-    client_id = 'HomeAssistant'
+    client_id = client
     port = 1883
     keepalive = 55
 
