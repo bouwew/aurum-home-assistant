@@ -27,6 +27,8 @@ import xml.etree.ElementTree as ET
 import paho.mqtt.client as mqtt
 import json
 
+from operator import itemgetter
+
 import homeassistant.helpers.config_validation as cv
 from homeassistant.const import (
     CONF_DEVICE, CONF_PASSWORD, CONF_USERNAME, 
@@ -417,13 +419,18 @@ async def async_setup(hass, config):
          except Exception as exception:
             _LOGGER.error("Unable to fetch data from AURUM. %s", exception)    
          else:
+            id = [6,7,8,15,16,17,18,19,20,22]
+            x = 0
             for child in root:
                if(child is not None):
                   parameter = child.tag
                   payload = "payload_"+str(parameter)
                   payload = locals()[payload]
                   payload = json.dumps(payload)
-                  mqttc.publish('homeassistant/sensor/aurum/{}/config'.format(parameter), payload, qos=0, retain=True)
+                  payload = payload.replace(": ", ":")
+                  if x in id:
+                     mqttc.publish('homeassistant/sensor/aurum/{}/config'.format(parameter), payload, qos=0, retain=True)
+                  x = x+1
          REGISTERED = 1
       else:
          """Get the latest data from the AURUM API and send to the MQTT Broker."""
@@ -435,6 +442,7 @@ async def async_setup(hass, config):
             _LOGGER.error("Unable to fetch data from AURUM. %s", exception)    
          else:
             data=[]
+            id = [6,7,8,15,16,17,18,19,20,22]
             for child in root:
                if(child is not None):
                   parameter = child.tag
@@ -448,7 +456,8 @@ async def async_setup(hass, config):
                   j_str = json.dumps({parameter:value})
                   j_str = j_str.replace('{"', "").replace('"}', "").replace('"', "")
                   data.append(j_str)
-            mqtt_message=json.dumps(data)
+            data = itemgetter(*id)(data)
+            mqtt_message = json.dumps(data)
             mqtt_message = mqtt_message.replace("[", "{").replace("]", "}").replace(': ', '":"')
             mqttc.publish('aurum/sensors', mqtt_message, qos=0, retain=True)
 
