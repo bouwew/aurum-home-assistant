@@ -7,13 +7,13 @@ https://github.com/bouwew/aurum-home-assistant/
 Configuration (example):
 
 aurum:
-   device: 192.168.0.110               # ip adress of the meetstekker
-   broker: 192.168.0.111               # ip adress of the MQTT broker
-   password: mqtt_password             # MQTT broker password
-   username: mqtt_user                 # MQTT username
-   _list: 6,7,8,15,16,17,18,19,20,22   # optional, example
-   client: MQTT client-id              # optional, default is 'aurum2mqtt'
-   scan_interval: 20                   # reporting interval, optional, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seoconds)
+   device: 192.168.0.110                  # ip adress of the meetstekker
+   broker: 192.168.0.111                  # ip adress of the MQTT broker
+   password: mqtt_password                # MQTT broker password
+   username: mqtt_user                    # MQTT username
+   select: [6,7,8,15,16,17,18,19,20,22]   # optional, example
+   client: MQTT client-id                 # optional, default is 'aurum2mqtt'
+   scan_interval: 20                      # reporting interval, optional, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seoconds)
    
 PLAN: change the code so that the sensors are autodiscovered by HA!
 
@@ -44,11 +44,11 @@ REGISTERED = 0
 
 CONF_BROKER = 'broker'
 CONF_CLIENT = 'client'
-CONF_LIST = '_list'
+CONF_LIST = 'select'
 
 DOMAIN = 'aurum'
 DEFAULT_CL = 'aurum2mqtt'
-DEFAULT_LIST = '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22'
+DEFAULT_SELECT = list(range(23))
 
 SCAN_INTERVAL = timedelta(seconds=60)
 
@@ -58,7 +58,7 @@ CONFIG_SCHEMA = vol.Schema({
         vol.Required(CONF_BROKER): cv.string,
         vol.Required(CONF_USERNAME): cv.string,
         vol.Required(CONF_PASSWORD): cv.string,
-        vol.Optional(CONF_LIST, default=DEFAULT_LIST): vol.All(cv.ensure_list, [cv.positive_int]),
+        vol.Optional(CONF_LIST, default=DEFAULT_SELECT): vol.All(cv.ensure_list, [cv.positive_int]),
         vol.Optional(CONF_CLIENT, default=DEFAULT_CL): cv.string,
         vol.Optional(CONF_SCAN_INTERVAL, default=SCAN_INTERVAL):
             cv.time_period,
@@ -72,7 +72,7 @@ async def async_setup(hass, config):
    broker = conf.get(CONF_BROKER)
    username = conf.get(CONF_USERNAME)
    password = conf.get(CONF_PASSWORD)
-   _list = conf.get(CONF_LIST)
+   select = conf.get(CONF_LIST)
    client = conf.get(CONF_CLIENT)
    scan_interval = conf.get(CONF_SCAN_INTERVAL)
 
@@ -90,7 +90,7 @@ async def async_setup(hass, config):
 
    hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, async_stop_aurum)
    
-   async def async_get_aurum_data(event_time,_list):   
+   async def async_get_aurum_data(event_time):   
       """Get the topics from the AURUM API and send to the MQTT Broker."""
       payload_powerBattery = {
                      'name':'aurum_battery_power',
@@ -432,7 +432,7 @@ async def async_setup(hass, config):
                   payload = locals()[payload]
                   payload = json.dumps(payload)
                   payload = payload.replace(": ", ":")
-                  if x in _list:
+                  if x in select:
                      mqttc.publish('homeassistant/sensor/aurum/{}/config'.format(parameter), payload, qos=0, retain=True)
                   x = x+1
          REGISTERED = 1
@@ -459,7 +459,7 @@ async def async_setup(hass, config):
                   j_str = json.dumps({parameter:value})
                   j_str = j_str.replace('{"', "").replace('"}', "").replace('"', "")
                   data.append(j_str)
-            data = itemgetter(*_list)(data)
+            data = itemgetter(*select)(data)
             mqtt_message = json.dumps(data)
             mqtt_message = mqtt_message.replace("[", "{").replace("]", "}").replace(': ', '":"')
             mqttc.publish('aurum/sensors', mqtt_message, qos=0, retain=True)
