@@ -48,7 +48,7 @@ There are in total 23 sensors available:
   unit_of_measurement: "kWh"
 - Main production          #total Electricity production
   unit_of_measurement: "kWh"
-- DSMR timestamp # when a Smart Meter with P1-port is present, the below data is coming from the Smart Meter
+- DSMR timestamp           #When a Smart Meter with P1-port is present, this and the below data is coming from the Smart Meter
 - E net consumption        #power-flow of the electrical connection connected to the DSMR meter with p1-port
   unit_of_measurement: "W"
 - E low in totals          #total Electricity consumption - low tariff
