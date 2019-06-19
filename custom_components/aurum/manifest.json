@@ -2,7 +2,7 @@
   "domain": "aurum",
   "name": "Home Assistant custom component for the Aurum Meetstekker",
   "documentation": "https://github.com/bouwew/aurum-home-assistant",
-  "dependencies": ["mqtt"],
-  "codeowners": ["@bouwew"],
+  "dependencies": [],
+  "codeowners": ["bouwew"],
   "requirements": ["paho-mqtt==1.4.0"]
 }
