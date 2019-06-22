@@ -78,7 +78,7 @@ async def async_setup(hass, config):
 
    client_id = client
    port = 1883
-   keepalive = 55
+   keepalive = 300
 
    mqttc = mqtt.Client(client_id, protocol=mqtt.MQTTv311)
    mqttc.username_pw_set(username, password=password)
