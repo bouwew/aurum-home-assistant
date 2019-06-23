@@ -47,7 +47,7 @@ CONF_BROKER = 'broker'
 CONF_CLIENT = 'client'
 CONF_LIST = 'select'
 
-DOMAIN = 'aurum'
+DOMAIN = 'aurum2mqtt'
 DEFAULT_CL = 'aurum2mqtt'
 DEFAULT_SELECT = list(range(23))
 
