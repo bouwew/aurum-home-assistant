@@ -408,14 +408,14 @@ async def async_setup(hass, config):
                               }
                      }
       global REGISTERED
-      if REGISTERED == 0:
-         try:
-            url = 'http://{}/measurements/output.xml'.format(device)
-            tree = ET.parse(ur.urlopen(url))
-            root = tree.getroot()
-         except Exception as exception:
-            _LOGGER.error("Unable to fetch data from AURUM. %s", exception)    
-         else:
+      try:
+         url = 'http://{}/measurements/output.xml'.format(device)
+         tree = ET.parse(ur.urlopen(url))
+         root = tree.getroot()
+      except Exception as exception:
+         _LOGGER.error("Unable to fetch data from AURUM. %s", exception)    
+      else:
+         if REGISTERED == 0:
             x = 0
             for child in root:
                if(child is not None):
@@ -428,33 +428,24 @@ async def async_setup(hass, config):
                      publish.single('homeassistant/sensor/aurum/{}/config'.format(parameter), payload, qos=0, retain=True, hostname=broker, port=port, auth=auth, client_id=client, protocol=mqtt.MQTTv311)
                   x = x+1
          REGISTERED = 1
-      else:
-         """Get the latest data from the AURUM API and send to the MQTT Broker."""
-         try:
-            url = 'http://{}/measurements/output.xml'.format(device)
-            tree = ET.parse(ur.urlopen(url))
-            root = tree.getroot()
-         except Exception as exception:
-            _LOGGER.error("Unable to fetch data from AURUM. %s", exception)    
-         else:
-            data=[]
-            for child in root:
-               if(child is not None):
-                  parameter = child.tag
-                  value = child.get('value')
-                  try:
-                     value = float(value)
-                     value = round(value, 2)
-                     value = str(value)
-                  except:
-                     pass
-                  j_str = json.dumps({parameter:value})
-                  j_str = j_str.replace('{"', "").replace('"}', "").replace('"', "")
-                  data.append(j_str)
-            data = itemgetter(*select)(data)
-            mqtt_message = json.dumps(data)
-            payload = mqtt_message.replace("[", "{").replace("]", "}").replace(': ', '":"')
-            publish.single('aurum/sensors', payload, qos=0, retain=True, hostname=broker, port=port, auth=auth, client_id=client, protocol=mqtt.MQTTv311)
+         data=[]
+         for child in root:
+            if(child is not None):
+               parameter = child.tag
+               value = child.get('value')
+               try:
+                  value = float(value)
+                  value = round(value, 2)
+                  value = str(value)
+               except:
+                  pass
+               j_str = json.dumps({parameter:value})
+               j_str = j_str.replace('{"', "").replace('"}', "").replace('"', "")
+               data.append(j_str)
+         data = itemgetter(*select)(data)
+         mqtt_message = json.dumps(data)
+         payload = mqtt_message.replace("[", "{").replace("]", "}").replace(': ', '":"')
+         publish.single('aurum/sensors', payload, qos=0, retain=True, hostname=broker, port=port, auth=auth, client_id=client, protocol=mqtt.MQTTv311)
 
    async_track_time_interval(hass, async_get_aurum_data, scan_interval)
 
