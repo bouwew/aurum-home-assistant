@@ -25,6 +25,7 @@ import voluptuous as vol
 
 import urllib.request as ur
 import xml.etree.ElementTree as ET
+import paho.mqtt.publish as publish
 import paho.mqtt.client as mqtt
 import json
 
@@ -36,7 +37,7 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL, EVENT_HOMEASSISTANT_START, EVENT_HOMEASSISTANT_STOP)
 from homeassistant.helpers.event import async_track_time_interval
 
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -77,19 +78,10 @@ async def async_setup(hass, config):
    scan_interval = conf.get(CONF_SCAN_INTERVAL)
 
    client_id = client
+   auth = {'username':username, 'password':password}
    port = 1883
    keepalive = 300
 
-   mqttc = mqtt.Client(client_id, protocol=mqtt.MQTTv311)
-   mqttc.username_pw_set(username, password=password)
-   mqttc.connect(broker, port=port, keepalive=keepalive)
-
-   async def async_stop_aurum(event):
-      """Stop the Aurum MQTT component."""
-      mqttc.disconnect()
-
-   hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, async_stop_aurum)
-   
    async def async_get_aurum_data(event_time):   
       """Get the topics from the AURUM API and send to the MQTT Broker."""
       payload_powerBattery = {
@@ -433,7 +425,7 @@ async def async_setup(hass, config):
                   payload = json.dumps(payload)
                   payload = payload.replace(": ", ":")
                   if x in select:
-                     mqttc.publish('homeassistant/sensor/aurum/{}/config'.format(parameter), payload, qos=0, retain=True)
+                     publish.single('homeassistant/sensor/aurum/{}/config'.format(parameter), payload, qos=0, retain=True, hostname=broker, port=port, auth=auth, client_id=client, protocol=mqtt.MQTTv311)
                   x = x+1
          REGISTERED = 1
       else:
@@ -461,8 +453,8 @@ async def async_setup(hass, config):
                   data.append(j_str)
             data = itemgetter(*select)(data)
             mqtt_message = json.dumps(data)
-            mqtt_message = mqtt_message.replace("[", "{").replace("]", "}").replace(': ', '":"')
-            mqttc.publish('aurum/sensors', mqtt_message, qos=0, retain=True)
+            payload = mqtt_message.replace("[", "{").replace("]", "}").replace(': ', '":"')
+            publish.single('aurum/sensors', payload, qos=0, retain=True, hostname=broker, port=port, auth=auth, client_id=client, protocol=mqtt.MQTTv311)
 
    async_track_time_interval(hass, async_get_aurum_data, scan_interval)
 
