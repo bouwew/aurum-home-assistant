@@ -4,5 +4,5 @@
   "documentation": "https://github.com/bouwew/aurum-home-assistant",
   "dependencies": [],
   "codeowners": ["bouwew"],
-  "requirements": ["paho-mqtt==1.4.0"]
+  "requirements": []
 }
