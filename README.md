@@ -4,7 +4,7 @@ Place the files ```__init__.py``` and ```manifest.json``` in the custom_componen
 to the configuration.yaml file (example):
 
 ```
-aurum:
+aurum2mqtt:
    device: 192.168.0.110                  # ip adress of the meetstekker
    broker: 192.168.0.111                  # ip adress of the MQTT broker
    username: mqtt_user                    # MQTT username
