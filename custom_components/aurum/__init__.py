@@ -6,7 +6,7 @@ https://github.com/bouwew/aurum-home-assistant/
 
 Configuration (example):
 
-aurum:
+aurum2mqtt:
    device: 192.168.0.110                  # ip adress of the meetstekker
    broker: 192.168.0.111                  # ip adress of the MQTT broker
    password: mqtt_password                # MQTT broker password
