@@ -9,14 +9,11 @@ Configuration (example):
 aurum:
    device: 192.168.0.110                  # ip adress of the meetstekker
    broker: 192.168.0.111                  # ip adress of the MQTT broker
-   password: mqtt_password                # MQTT broker password
    username: mqtt_user                    # MQTT username
+   password: mqtt_password                # MQTT broker password
    select: [6,7,8,15,16,17,18,19,20,22]   # optional, example
-   client: MQTT client-id                 # optional, default is 'aurum2mqtt'
+   client: MQTT_client-id                 # optional, default is 'aurum2mqtt'
    scan_interval: 20                      # reporting interval, optional, default 60 seconds (note: the Dutch Smart Meter refreshes every 10 seoconds)
-   
-PLAN: change the code so that the sensors are autodiscovered by HA!
-
 """
 import logging
 from datetime import timedelta
