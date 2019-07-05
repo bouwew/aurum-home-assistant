@@ -2,8 +2,8 @@
     "aurum2mqtt": {
         "updated_at": "2019-07-05",
         "version": "0.2.4",
-        "local_location": "/custom_components/aurum/__init__.py",
-        "remote_location": "https://raw.githubusercontent.com/bouwew/aurum-home-assistant/master/custom_components/aurum/__init__.py",
+        "local_location": "/custom_components/aurum2qtt/__init__.py",
+        "remote_location": "https://raw.githubusercontent.com/bouwew/aurum-home-assistant/master/custom_components/aurum2mqtt/__init__.py",
         "visit_repo": "https://github.com/bouwew/aurum-home-assistant",
         "changelog": "https://github.com/bouwew/aurum-home-assistant/releases",
     }
