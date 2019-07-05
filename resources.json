@@ -1,4 +1,3 @@
 [
-  "https://raw.githubusercontent.com/bouwew/aurum-home-assistant/master/custom_components/aurum/manifest.json",
-  "https://raw.githubusercontent.com/bouwew/aurum-home-assistant/master/custom_components/aurum/sensor.py"
+  "https://raw.githubusercontent.com/bouwew/aurum-home-assistant/master/custom_components/aurum/manifest.json"
 ]
